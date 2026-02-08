@@ -1,0 +1,13 @@
+{
+  "name": "tilda-macos",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build:js": "esbuild src/index.js --bundle --format=iife --global-name=DockUI --outfile=dist/macos.js",
+    "build:css": "cp src/macos.css dist/macos.css",
+    "build": "npm run build:js && npm run build:css"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0"
+  }
+}
