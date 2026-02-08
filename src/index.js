@@ -126,9 +126,49 @@ const init = ({
       setupDockHover({ dock, items: dockItems });
 
       dockItems.forEach((item) => {
+        const atom = item.classList.contains('tn-atom')
+          ? item
+          : item.querySelector('.tn-atom') || item;
+
+        atom.style.setProperty('--dockPress', '1');
+
+        const pressDown = () => {
+          window.gsap?.to(atom, {
+            '--dockPress': 0.94,
+            duration: 0.1,
+            ease: 'power2.out',
+            overwrite: 'auto',
+          });
+        };
+
+        const pressUp = () => {
+          window.gsap?.to(atom, {
+            '--dockPress': 1,
+            duration: 0.18,
+            ease: 'power2.out',
+            overwrite: 'auto',
+          });
+        };
+
+        item.addEventListener('pointerdown', pressDown);
+        item.addEventListener('pointerup', pressUp);
+        item.addEventListener('pointerleave', pressUp);
+        item.addEventListener('pointercancel', pressUp);
+
         item.addEventListener('click', (event) => {
           event.preventDefault();
           event.stopPropagation();
+
+          window.gsap?.fromTo(
+            atom,
+            { '--dockPress': 0.92 },
+            {
+              '--dockPress': 1,
+              duration: 0.35,
+              ease: 'back.out(2)',
+              overwrite: 'auto',
+            }
+          );
 
           const result = mapItemToWindow(item, windowIndex);
           if (!result.window) {

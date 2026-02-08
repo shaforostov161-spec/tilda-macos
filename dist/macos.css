@@ -1,6 +1,6 @@
 :root {
   --dockMin: 0;
-  --dockMaxScale: 2.0;
+  --dockMaxScale: 1.5;
   --dockHitPad: -10;
   --dockDur: 0.2;
   --dockEase: power2.out;
@@ -16,9 +16,18 @@
   --winClampPad: 15;
 }
 
+body {
+  overflow: hidden;
+}
+
+.dock {
+  z-index: 2 !important;
+}
+
 .dock-item {
   overflow: visible !important;
   cursor: pointer;
+  z-index: 3 !important;
 }
 
 .dock-item .tn-atom {
@@ -27,13 +36,13 @@
   display: block;
   overflow: visible;
   transform-origin: 50% 120%;
-  transform: translate3d(0, 0, 0) scale(var(--dockS, 1));
+  transform: translate3d(0, 0, 0) scale(calc(var(--dockS, 1) * var(--dockPress, 1)));
   will-change: transform;
 }
 
 .dock-window {
   pointer-events: none;
-  z-index: 99999;
+  z-index: 1 !important;
   touch-action: none;
   transform-origin: center center;
 }

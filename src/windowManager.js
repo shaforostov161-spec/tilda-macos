@@ -77,10 +77,6 @@ const createWindowManager = ({
     const st = state.get(win);
     if (!st || st.isOpen) return;
 
-    getOpenWindows()
-      .filter((other) => other !== win)
-      .forEach((other) => closeWindow(other));
-
     onToggleOverlay(true);
 
     win.classList.add('is-open');
